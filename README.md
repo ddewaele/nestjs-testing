@@ -137,7 +137,9 @@ Some sample commands.
 
 ```
 restish POST localhost:3000/movies title: Terminator II, year:1992
+restish POST localhost:3000/movies title: Alive, year:1993
 restish GET localhost:3000/movies
+restish PATCH localhost:3000/movies title: Alive_updated
 restish GET localhost:3000/movies/01JDCCZDD7HWR3WVM0RB9V7B8F
 restish DELETE localhost:3000/movies/01JDCCZDD7HWR3WVM0RB9V7B8F
 ```

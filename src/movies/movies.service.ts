@@ -80,7 +80,7 @@ export class MoviesService {
     return result.Item || null;
   }
 
-  async update(id: number, updateMovieDto: UpdateMovieDto) {
+  async update(id: string, updateMovieDto: UpdateMovieDto) {
     this.logger.log(`This action updates a #${id} movie`);
 
     const updateExpression = Object.keys(updateMovieDto)
