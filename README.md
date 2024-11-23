@@ -71,6 +71,16 @@ $ npm run test:cov
 aws dynamodb list-tables --endpoint-url http://localhost:8000
 ```
 
+you shouldn't have any tables in the beginning
+
+```
+{
+    "TableNames": []
+}
+```
+
+Create a table
+
 ```
 aws dynamodb create-table \
     --table-name MoviesTable \
@@ -84,6 +94,22 @@ aws dynamodb create-table \
     --endpoint-url http://localhost:8000
 ```
 
+After that you should see the table.
+
+```
+aws dynamodb list-tables --endpoint-url http://localhost:8000
+```
+
+you shouldn't have any tables in the beginning
+
+```
+{
+    "TableNames": [
+        "MoviesTable"
+    ]
+}
+```
+
 Scan the table
 ```
 aws dynamodb scan \
@@ -94,7 +120,7 @@ aws dynamodb scan \
 Remove the table
 
 ```
-aws dynamodb remove-table \
+aws dynamodb delete-table \
     --table-name MoviesTable \
      --endpoint-url http://localhost:8000
 ```
