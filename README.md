@@ -65,6 +65,57 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Setting up a local DynamoDB
+
+```
+aws dynamodb list-tables --endpoint-url http://localhost:8000
+```
+
+```
+aws dynamodb create-table \
+    --table-name MoviesTable \
+    --attribute-definitions \
+        AttributeName=PK,AttributeType=S \
+        AttributeName=SK,AttributeType=S \
+    --key-schema \
+        AttributeName=PK,KeyType=HASH \
+        AttributeName=SK,KeyType=RANGE \
+    --billing-mode PAY_PER_REQUEST \
+    --endpoint-url http://localhost:8000
+```
+
+Scan the table
+```
+aws dynamodb scan \
+    --table-name MoviesTable \
+    --endpoint-url http://localhost:8000
+```
+
+Remove the table
+
+```
+aws dynamodb remove-table \
+    --table-name MoviesTable \
+     --endpoint-url http://localhost:8000
+```
+
+
+## Querying the REST API
+
+You can use `restish` to interact with the API (or cURL if you like it a bit more verbose)
+
+```
+brew install danielgtaylor/restish/restish
+```
+Some sample commands.
+
+```
+restish POST localhost:3000/movies title: Terminator II, year:1992
+restish GET localhost:3000/movies
+restish GET localhost:3000/movies/01JDCCZDD7HWR3WVM0RB9V7B8F
+restish DELETE localhost:3000/movies/01JDCCZDD7HWR3WVM0RB9V7B8F
+```
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
