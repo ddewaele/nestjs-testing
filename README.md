@@ -2,8 +2,6 @@
 
 Sample [Nest](https://github.com/nestjs/nest) project using TypeScript with a simple CRUD controller to demonstrate testing
 
- 
-
 ## Starting a NestJS project
 
 The script was created using the NestJS CLI
@@ -65,8 +63,32 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Deploying against an AWS account
+
+If you want to run the REST backend on AWS you'll need to deploy a DynamoDB table.
+
+Take a look at https://github.com/ddewaele/cdk-simple-dynamodb
+
 ## Setting up a local DynamoDB
 
+If you don't want to rely on AWS you can spinup a local dynamodb via [docker compose](./docker-compose.yml)
+
+```
+services:
+ dynamodb-local:
+   command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+   image: "amazon/dynamodb-local:latest"
+   container_name: dynamodb-local
+   ports:
+     - "8000:8000"
+   volumes:
+     - "./docker/dynamodb:/home/dynamodblocal/data"
+   working_dir: /home/dynamodblocal
+```
+
+You can run the following aws CLI commands to interact with your local dynamodb.
+
+If you are running against AWS simply omit the endpoint URL.
 ```
 aws dynamodb list-tables --endpoint-url http://localhost:8000
 ```

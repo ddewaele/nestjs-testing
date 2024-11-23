@@ -21,8 +21,11 @@ export class MoviesService {
   private readonly client: DynamoDBDocumentClient;
 
   constructor() {
+    const isLocal = process.env.USE_LOCAL_DYNAMODB === 'true';
     const dynamoClient = new DynamoDBClient({
-      endpoint: 'http://localhost:8000',
+      ...(isLocal
+        ? { endpoint: 'http://localhost:8000' } // Use local DynamoDB endpoint in development
+        : {}), // Use default settings for AWS environment
     });
     this.client = DynamoDBDocumentClient.from(dynamoClient);
   }
