@@ -1,6 +1,8 @@
 ## Description
 
-Sample [Nest](https://github.com/nestjs/nest) project using TypeScript with a simple CRUD controller to demonstrate testing
+Sample [Nest](https://github.com/nestjs/nest) project using TypeScript with a simple CRUD controller to demonstrate 3 ways of testing
+
+![](./docs/dynamodb.png)
 
 ## Starting a NestJS project
 
