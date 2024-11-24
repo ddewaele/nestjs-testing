@@ -6,13 +6,13 @@ Sample [Nest](https://github.com/nestjs/nest) project using TypeScript with a si
 
 ## Starting a NestJS project
 
-The script was created using the NestJS CLI
+The project was bootstrapped using the NestJS CLI using the `nest new` command to create a basic project.
 
 ```
 nest new nestjs-testing
 ```
 
-We then proceeded to create our Movie resource
+We then proceeded to create our Movie resource using the `nest g resource` CLI recipe, giving us a module, controller service, entity and DTOs.
 ```
 base ❯ nest g resource
 ? What name would you like to use for this resource (plural, e.g., "users")? movies
@@ -31,7 +31,7 @@ UPDATE src/app.module.ts (316 bytes)
 ✔ Packages installed successfully.
 ```
 
-
+With that in place we can already install / start and build the application
 
 ## Installation
 
@@ -54,6 +54,9 @@ $ npm run start:prod
 
 ## Test
 
+For testing we can run unit tests , e2e tests and see our test coverage.
+In this repo we will focus on the e2e tests, as this will setup our DynamoDB mocks.
+
 ```bash
 # unit tests
 $ npm run test
@@ -69,11 +72,11 @@ $ npm run test:cov
 
 If you want to run the REST backend on AWS you'll need to deploy a DynamoDB table.
 
-Take a look at https://github.com/ddewaele/cdk-simple-dynamodb
+Take a look at my [cdk-simple-dynamodb](https://github.com/ddewaele/cdk-simple-dynamodb) repository for a quick way to deploy a DynamoDB table in your account.
 
 ## Setting up a local DynamoDB
 
-If you don't want to rely on AWS you can spinup a local dynamodb via [docker compose](./docker-compose.yml)
+If you don't want to rely on AWS you can spin-up a local dynamodb via this [docker compose](./docker-compose.yml)
 
 ```
 services:
@@ -88,9 +91,32 @@ services:
    working_dir: /home/dynamodblocal
 ```
 
-You can run the following aws CLI commands to interact with your local dynamodb.
+It will pull in the `amazon/dynamodb-local` docker image, allowing you to have a dynamodb running on your computer.
 
-If you are running against AWS simply omit the endpoint URL.
+You can interact with that local dynamoDB by running the following AWS CLI commands. Simply use the `--endpoint-url` parameter to point it to your local dynamoDB.
+(If you are running against AWS simply omit the endpoint URL.)
+
+the local dynamoDB does expect a dummy aws credentials setup.
+
+You can use something like this in your `~/.aws/credentials` file : 
+
+```
+[local]
+aws_access_key_id=dummy
+aws_secret_access_key=dummy
+region=eu-central-1
+```
+
+Activate it by exporting your `AWS_PROFILE` like this
+
+```
+export AWS_PROFILE=local
+```
+
+And you should be good to go.
+
+Lets start by listing the dynamoDB tables.
+
 ```
 aws dynamodb list-tables --endpoint-url http://localhost:8000
 ```
@@ -151,6 +177,8 @@ aws dynamodb delete-table \
 
 
 ## Querying the REST API
+
+Our Nest APP contains basic CRUD functionality to interact with our Movie resource.
 
 You can use `restish` to interact with the API (or cURL if you like it a bit more verbose)
 
